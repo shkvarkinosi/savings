@@ -18,3 +18,12 @@ bool TGAImage::read_tga_file(const std::string filename) {
         std::cerr << "bad bpp (or width/height) value\n";
         return false;
     } // good
+   } else if (10==header.datatypecode||11==header.datatypecode) {
+        if (!load_rle_data(in)) {
+            std::cerr << "an error occured while reading the data\n";
+            return false;
+        }
+    } else {
+        std::cerr << "unknown file format " << (int)header.datatypecode << "\n";
+        return false;
+    }
